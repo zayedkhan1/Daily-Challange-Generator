@@ -6,6 +6,9 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import { FiHome, FiUser, FiSettings } from "react-icons/fi";
 import clsx from "clsx";
+import { MdDarkMode } from "react-icons/md";
+import { CiLight } from "react-icons/ci";
+import { motion } from "framer-motion";
 
 export default function App() {
   // Dark mode toggle
@@ -26,9 +29,9 @@ export default function App() {
         <div className="flex flex-col min-h-screen bg-indigo-50 dark:bg-gray-900 transition-colors duration-500">
           <nav className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-              <h1 className="text-xl font-bold text-indigo-700 dark:text-indigo-300 select-none">
+              <a href="/" className="text-xl font-bold text-indigo-700 dark:text-indigo-300 select-none">
                 Daily Challenge
-              </h1>
+              </a>
               <div className="flex gap-4">
                 <NavLink
                   to="/"
@@ -64,13 +67,29 @@ export default function App() {
                 >
                   <FiSettings /> Settings
                 </NavLink>
-                <button
-                  onClick={() => setDark(!dark)}
-                  className="ml-4 px-3 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white"
-                  aria-label="Toggle Dark Mode"
-                >
-                  {dark ? "Light" : "Dark"}
-                </button>
+               
+                  <motion.button
+      onClick={() => setDark(!dark)}
+      className="ml-4 px-3 py-1"
+      aria-label="Toggle Dark Mode"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    >
+      <motion.div
+        key={dark ? "light" : "dark"}
+        initial={{ rotate: -30, opacity: 0 }}
+        animate={{ rotate: 0, opacity: 1 }}
+        exit={{ rotate: 30, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {dark ? (
+          <CiLight className="text-3xl text-yellow-600" />
+        ) : (
+          <MdDarkMode className="text-3xl text-indigo-700" />
+        )}
+      </motion.div>
+    </motion.button>
               </div>
             </div>
           </nav>
